@@ -3,23 +3,57 @@ data:
   database_meta_path: ./data/online_shopping_meta.json
   table_name: online_shopping
 
-preprocessing:
-  clean:
-    - drop_na: true
-  
 models:
   - name: XGBClassifier
     params:
       n_estimators: 100
       max_depth: 5
       learning_rate: 0.1
-  - name: SVM
+      scale_pos_weight: 5.5
+      random_state: 42
+    tuning_grid:
+      n_estimators: [100, 200]
+      max_depth: [3, 5, 7]
+      learning_rate: [0.01, 0.1]
+
+  - name: SVC
     params:
-      n_estimators: 100
-      max_depth: 5
+      kernel: rbf
+      C: 1.0
+      probability: true
+      random_state: 42
+    tuning_grid:
+      C: [0.1, 1.0, 10.0]
+      kernel: [rbf, linear]
+
   - name: MLPClassifier
     params:
-      hidden_layer_sizes: (100,)
+      hidden_layer_sizes: [100]
       activation: relu
       solver: adam
+      random_state: 42
+      max_iter: 500
+    tuning_grid:
+      hidden_layer_sizes: [[50], [100], [100, 50]]
+      activation: [relu, tanh]
+      learning_rate_init: [0.001, 0.01]
 
+pipeline:
+  model_selections:
+    - XGBClassifier
+    - SVC
+    - MLPClassifier
+  test_size: 0.2
+  random_state: 42
+  scoring: f1
+
+  validation:
+    n_splits: 5
+    shuffle: true
+    random_state: 42
+
+  tuning:
+    enabled: true
+    method: GridSearchCV
+    n_iter: 10
+    random_state: 42
