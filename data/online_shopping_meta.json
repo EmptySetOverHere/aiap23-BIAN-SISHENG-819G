@@ -1,0 +1,17 @@
+{
+    "columns": {
+        "numeric": [
+            "SpecialDayProximity",
+            "ExitRate",
+            "PageValue",
+            "TrafficSource",
+            "BounceRate",
+            "ProductPageTime"
+        ],
+        "categorical": [
+            "CustomerType",
+            "GeographicRegion"
+        ],
+        "ground_truth": "PurchaseCompleted"
+    }
+}

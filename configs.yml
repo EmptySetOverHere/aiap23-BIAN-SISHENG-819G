@@ -1,0 +1,4 @@
+data:
+  database_path: ./data/online_shopping.db
+  database_meta_path: ./data/online_shopping_meta.json
+  table_name: online_shopping
