@@ -1,0 +1,25 @@
+data:
+  database_path: ./data/online_shopping.db
+  database_meta_path: ./data/online_shopping_meta.json
+  table_name: online_shopping
+
+preprocessing:
+  clean:
+    - drop_na: true
+  
+models:
+  - name: XGBClassifier
+    params:
+      n_estimators: 100
+      max_depth: 5
+      learning_rate: 0.1
+  - name: SVM
+    params:
+      n_estimators: 100
+      max_depth: 5
+  - name: MLPClassifier
+    params:
+      hidden_layer_sizes: (100,)
+      activation: relu
+      solver: adam
+
